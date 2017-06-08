@@ -32,7 +32,7 @@ namespace Styx.Bot.CustomClasses
 
         public Stopwatch CheckMapTimer = new Stopwatch();
         public Stopwatch HoldMapTimer = new Stopwatch();
-		
+
 		public bool IsMapOpened = false;
 
         public int WhereAmITimeout = 0;
@@ -44,7 +44,7 @@ namespace Styx.Bot.CustomClasses
             {
                 CheckMapTimer.Reset();
                 CheckMapTimer.Start();
-                WhereAmITimeout = rGen.Next(40, 180);
+                WhereAmITimeout = rGen.Next(60, 300);
             }
 
             if (!Me.Combat && CheckMapTimer.Elapsed.TotalSeconds > WhereAmITimeout)
@@ -76,10 +76,11 @@ namespace Styx.Bot.CustomClasses
                     HoldMapTimeout = 0;
                 }
             }
-			
-			if (IsMapOpened && !Me.Combat)
+
+			if (IsMapOpened && !Me.Combat) {
 				return;
-			
+			}
+
 			if (IsMapOpened && Me.Combat)
 			{
 				Logging.Write("I'm in combat! close Map");
