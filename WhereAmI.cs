@@ -23,7 +23,7 @@ namespace Styx.Bot.CustomClasses
         private Random rGen = new Random();
 
         //private static LocalPlayer Me { get { return ObjectManager.Me; } }
-		private static LocalPlayer Me { get { return StyxWoW.Me; } }
+        private static LocalPlayer Me { get { return StyxWoW.Me; } }
 
         public override string Name { get { return "Where am i?"; } }
         public override string Author { get { return "Cartman"; } }
@@ -33,7 +33,7 @@ namespace Styx.Bot.CustomClasses
         public Stopwatch CheckMapTimer = new Stopwatch();
         public Stopwatch HoldMapTimer = new Stopwatch();
 
-		public bool IsMapOpened = false;
+        public bool IsMapOpened = false;
 
         public int WhereAmITimeout = 0;
         public int HoldMapTimeout = 0;
@@ -55,21 +55,21 @@ namespace Styx.Bot.CustomClasses
                     HoldMapTimer.Start();
                     HoldMapTimeout = rGen.Next(1, 3);
                 }
-				if (!IsMapOpened)
-				{
-					WoWMovement.MoveStop();
-					Lua.DoString("RunMacroText('/click MiniMapWorldMapButton');");
-					IsMapOpened = true;
-				}
+                if (!IsMapOpened)
+                {
+                    WoWMovement.MoveStop();
+                    Lua.DoString("RunMacroText('/click MiniMapWorldMapButton');");
+                    IsMapOpened = true;
+                }
                 Logging.Write("Checking where the heck am i?");
                 if (HoldMapTimer.Elapsed.TotalSeconds > HoldMapTimeout)
                 {
                     Logging.Write("Ok, got it!");
-					if (IsMapOpened)
-					{
-						Lua.DoString("RunMacroText('/click WorldMapFrameCloseButton');");
-						IsMapOpened = false;
-					}
+                    if (IsMapOpened)
+                    {
+                        Lua.DoString("RunMacroText('/click WorldMapFrameCloseButton');");
+                        IsMapOpened = false;
+                    }
                     CheckMapTimer.Reset();
                     WhereAmITimeout = 0;
                     HoldMapTimer.Reset();
@@ -77,24 +77,24 @@ namespace Styx.Bot.CustomClasses
                 }
             }
 
-			if (IsMapOpened && !Me.Combat) {
-				return;
-			}
+            if (IsMapOpened && !Me.Combat) {
+                return;
+            }
 
-			if (IsMapOpened && Me.Combat)
-			{
-				Logging.Write("I'm in combat! close Map");
-				if (IsMapOpened)
-				{
-					Lua.DoString("RunMacroText('/click WorldMapFrameCloseButton');");
-					IsMapOpened = false;
-				}
-				CheckMapTimer.Reset();
-				WhereAmITimeout = 0;
-				HoldMapTimer.Reset();
-				HoldMapTimeout = 0;
-				return;
-			}
+            if (IsMapOpened && Me.Combat)
+            {
+                Logging.Write("I'm in combat! close Map");
+                if (IsMapOpened)
+                {
+                    Lua.DoString("RunMacroText('/click WorldMapFrameCloseButton');");
+                    IsMapOpened = false;
+                }
+                CheckMapTimer.Reset();
+                WhereAmITimeout = 0;
+                HoldMapTimer.Reset();
+                HoldMapTimeout = 0;
+                return;
+            }
         }
     }
 }
