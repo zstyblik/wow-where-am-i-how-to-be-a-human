@@ -47,6 +47,11 @@ namespace Styx.Bot.CustomClasses
                 WhereAmITimeout = rGen.Next(60, 300);
             }
 
+            if (Styx.CommonBot.Frames.AuctionFrame.Instance.IsVisible || Styx.CommonBot.Frames.MailFrame.Instance.IsVisible)
+            {
+                return;
+            }
+
             if (!Me.Combat && CheckMapTimer.Elapsed.TotalSeconds > WhereAmITimeout)
             {
                 if (!HoldMapTimer.IsRunning)
